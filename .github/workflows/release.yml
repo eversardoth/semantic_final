@@ -31,7 +31,7 @@ jobs:
           pr_number: ${github.event.number}
           tmp_branch: tmp-PR${{ github.event.number }}-${{ github.sha }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.event_name == 'pull_request' && github.head_ref == 'main'
+        if: github.event_name == 'pull_request' && github.base_ref == 'main'
         run:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
