@@ -29,6 +29,7 @@ jobs:
       - name: Pre-release branch generation and manual workflow execution
         env:
           pr_number: ${github.event.number}
+          head_ref: ${github.head_ref}
           tmp_branch: tmp-PR${{ github.event.number }}-${{ github.sha }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.event_name == 'pull_request' && github.base_ref == 'main'
