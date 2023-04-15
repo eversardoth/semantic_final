@@ -23,7 +23,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.ref_name == 'main' && github.event_name == 'push'
-        run:
+        run: |
           npm install -g semantic-release;
           npx semantic-release --debug
       - name: Pre-release branch generation and manual workflow execution
@@ -32,7 +32,7 @@ jobs:
           tmp_branch: tmp-PR${{ github.event.number }}-${{ github.sha }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.event_name == 'pull_request' && github.base_ref == 'main'
-        run:
+        run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git checkout "${head_ref}"
