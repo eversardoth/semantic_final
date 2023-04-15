@@ -20,7 +20,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.ref_name == 'main' && github.event_name == 'push'
         run:
-          npm install -g semantic-release
+          npm install -g semantic-release;
           npx semantic-release --debug
       - name: Pre-release branch generation and manual workflow execution
         env:
