@@ -1,5 +1,5 @@
 name: Pre-release workflow
-run-name: Pre-release workflow for PR number ${inputs.pr_number}
+run-name: Pre-release workflow for PR number ${{ inputs.pr_number }}
 permissions:
   contents: write
 on:
@@ -27,3 +27,16 @@ jobs:
           echo 'hola' > ever.txt
           npm install -g semantic-release
           npx semantic-release --debug
+      - name: Temporal-branch deletion
+        env:
+          ref: ${{ github.ref }}
+        uses: actions/github-script@v6
+        with:
+          retries: 3
+          script: |
+            await github.rest.git.deleteRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: process.env.ref
+            })
+
