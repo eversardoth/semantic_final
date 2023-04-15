@@ -1,7 +1,7 @@
 name: Pre-release workflow
 run-name: Pre-release workflow for PR number ${inputs.pr_number}
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       pr_number:
         type: number
