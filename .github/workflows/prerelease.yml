@@ -37,6 +37,6 @@ jobs:
             await github.rest.git.deleteRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: `heads/${process.env.ref}`
+              ref: `heads/${process.env.ref_name}`
             })
 
