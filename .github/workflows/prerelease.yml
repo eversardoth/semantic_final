@@ -1,5 +1,7 @@
 name: Pre-release workflow
 run-name: Pre-release workflow for PR number ${inputs.pr_number}
+permissions:
+  contents: write
 on:
   workflow_dispatch:
     inputs:
