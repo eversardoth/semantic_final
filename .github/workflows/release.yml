@@ -15,6 +15,9 @@ on:
       - main
 jobs:
   release:
+    defaults:
+      run:
+        shell: bash
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -37,11 +40,31 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git checkout "${head_ref}"
-          git checkout -b "${tmp_branch}"
+          if [ -n "$(git ls-remote --heads origin "${tmp_branch}")" ]
+          then
+            git checkout "${tmp_branch}"
+          else
+            git checkout "${head_ref}"
+            git checkout -b "${tmp_branch}"
+          fi
           git merge origin/main
           git push origin "${tmp_branch}" -u
           gh workflow run prerelease.yml --ref "${tmp_branch}" -f pr_number="${pr_number}"
+      - name: Temporal-branch deletion
+        if: github.event.action == 'closed' && github.event_name == 'pull_request' && github.event.pull_request.merged == true
+        env:
+          ref_name: ${{ github.ref_name }}
+        uses: actions/github-script@v6
+        with:
+          retries: 3
+          script: |
+            await github.rest.git.deleteRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `heads/${process.env.ref_name}`
+            })
+        
+          
 
 
 
