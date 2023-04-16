@@ -29,7 +29,7 @@ jobs:
         run: |
           sed -i s/'branch_name'/"${ref_name}"/ .releaserc
           sed -i s/'pr_number'/"PR${pr_number}"/ .releaserc
-          echo 'hola' > ever.txt
+          echo 'hola' >> ever.txt
           npm install -g @semantic-release/git
           npm install -g semantic-release
           npx semantic-release --debug
