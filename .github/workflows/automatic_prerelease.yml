@@ -1,0 +1,16 @@
+name: Automatic prerelease generation at PR opening
+run-name: Automatic prerelease generation at PR opening - PR${{ github.event.number }}
+on:
+  pull_request:
+    types:
+      - opened
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Empty commit generation
+        run: |
+          git --allow-empty -m "chore(bot): Automatic prerelease generation at PR opening"
